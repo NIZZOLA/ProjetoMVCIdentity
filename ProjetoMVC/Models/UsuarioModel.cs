@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Identity;
 
 namespace ProjetoMVC.Areas.Identity.Data;
 
-// Add profile data for application users by adding properties to the UsuarioModel class
+// Add profile data for application users by adding properties to the UsuarioModel class //7mDGbMKmUbH_K7p
 public class UsuarioModel : IdentityUser
 {
     [MaxLength(50, ErrorMessage = "O tamanho máximo do campo {0} é de {1} caracteres")]
