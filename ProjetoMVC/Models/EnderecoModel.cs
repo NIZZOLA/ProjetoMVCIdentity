@@ -9,7 +9,7 @@ namespace ProjetoMVC.Models
     {
         [ForeignKey("ClienteFornecedor")]
         public Guid? ClienteFornecedorId { get; set; }
-        public ClienteFornecedorModel ClienteFornecedor { get; set; }
+        public ClienteFornecedorModel? ClienteFornecedor { get; set; }
 
         [ForeignKey("Empreendimento")]
         public Guid? EmpreendimentoId { get; set; }

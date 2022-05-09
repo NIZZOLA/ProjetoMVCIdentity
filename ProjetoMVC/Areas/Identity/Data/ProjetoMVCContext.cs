@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using ProjetoMVC.Areas.Identity.Data;
 using ProjetoMVC.Models;
+using ProjetoMVC.Models.Contracts.Request;
 
 namespace ProjetoMVC.Data;
 
@@ -29,5 +30,8 @@ public class ProjetoMVCContext : IdentityDbContext<UsuarioModel>
     public DbSet<TipoDePagamentoModel> TiposDePagamento { get; set; }
     public DbSet<TipoDeDespesaReceitaModel> TiposDeDespesas { get; set; }
     public DbSet<ContatoModel> Contatos { get; set; }
+    public DbSet<ProjetoMVC.Models.PessoaModel> PessoaModel { get; set; }
+    public DbSet<ProjetoMVC.Models.PessoaJuridicaModel> PessoaJuridicaModel { get; set; }
+    public DbSet<ProjetoMVC.Models.Contracts.Request.ClienteFornecedorRequestModel> ClienteFornecedorRequestModel { get; set; }
    
 }

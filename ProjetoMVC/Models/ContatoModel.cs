@@ -18,5 +18,7 @@ namespace ProjetoMVC.Models
         public string Email { get; set; }
         [MaxLength(15, ErrorMessage = "")]
         public string Telefone { get; set; }
+
+
     }
 }
