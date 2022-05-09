@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using ProjetoMVC.Data;
 
@@ -11,9 +12,10 @@ using ProjetoMVC.Data;
 namespace ProjetoMVC.Migrations
 {
     [DbContext(typeof(ProjetoMVCContext))]
-    partial class ProjetoMVCContextModelSnapshot : ModelSnapshot
+    [Migration("20220509123803_correcaoNullCliente")]
+    partial class correcaoNullCliente
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -292,9 +294,6 @@ namespace ProjetoMVC.Migrations
                     b.Property<bool>("Fornecedor")
                         .HasColumnType("bit");
 
-                    b.Property<string>("Observacoes")
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<Guid?>("PessoaId")
                         .HasColumnType("uniqueidentifier");
 
@@ -443,67 +442,6 @@ namespace ProjetoMVC.Migrations
                     b.HasIndex("ClienteId");
 
                     b.ToTable("Contatos");
-                });
-
-            modelBuilder.Entity("ProjetoMVC.Models.Contracts.Request.ClienteFornecedorRequestModel", b =>
-                {
-                    b.Property<Guid?>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<bool>("Cliente")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("Cnpj")
-                        .IsRequired()
-                        .HasMaxLength(18)
-                        .HasColumnType("nvarchar(18)");
-
-                    b.Property<string>("Cpf")
-                        .IsRequired()
-                        .HasMaxLength(18)
-                        .HasColumnType("nvarchar(18)");
-
-                    b.Property<DateTime?>("DataDeNascimento")
-                        .HasColumnType("datetime2");
-
-                    b.Property<bool>("Fornecedor")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("InscricaoEstadual")
-                        .IsRequired()
-                        .HasMaxLength(18)
-                        .HasColumnType("nvarchar(18)");
-
-                    b.Property<string>("Nome")
-                        .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
-
-                    b.Property<string>("NomeFantasia")
-                        .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
-
-                    b.Property<string>("Observacoes")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<bool>("OptanteDoSimples")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("RazaoSocial")
-                        .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
-
-                    b.Property<string>("TipoDeCliente")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("ClienteFornecedorRequestModel");
                 });
 
             modelBuilder.Entity("ProjetoMVC.Models.EmpreendimentoModel", b =>
@@ -659,6 +597,10 @@ namespace ProjetoMVC.Migrations
                         .IsRequired()
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
+
+                    b.Property<string>("Observacoes")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<bool>("OptanteDoSimples")
                         .HasColumnType("bit");

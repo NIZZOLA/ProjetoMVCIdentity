@@ -1,0 +1,124 @@
+﻿@model ProjetoMVC.Models.Contracts.Request.ClienteFornecedorRequestModel
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<style>
+#divPessoaFisica {
+    border:1px solid;
+    padding:5px;
+}
+
+#divPessoaJuridica{
+    border:1px solid;
+    padding:5px;
+}
+</style>
+
+
+<h1>Create</h1>
+
+<h4>ClienteFornecedorRequestModel</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Create">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="radios">
+                <input type="radio" id="TipoDeCliente" name="TipoDeCliente" value="F" checked="checked" onclick="AtivarFisica()">
+                Pessoa Fisica
+                <input type="radio" id="TipoDeCliente" name="TipoDeCliente" value="J" onclick="AtivarJuridica()">
+                Pessoa Juridica
+
+            </div>
+
+            <div class="form-group form-check">
+                <label class="form-check-label">
+                    <input class="form-check-input" asp-for="Cliente" /> @Html.DisplayNameFor(model => model.Cliente)
+                </label>
+            </div>
+            <div class="form-group form-check">
+                <label class="form-check-label">
+                    <input class="form-check-input" asp-for="Fornecedor" /> @Html.DisplayNameFor(model => model.Fornecedor)
+                </label>
+            </div>
+            <div id="divPessoaFisica">
+                <div class="form-group">
+                    <label asp-for="Nome" class="control-label"></label>
+                    <input asp-for="Nome" class="form-control" />
+                    <span asp-validation-for="Nome" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Cpf" class="control-label"></label>
+                    <input asp-for="Cpf" class="form-control" />
+                    <span asp-validation-for="Cpf" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="DataDeNascimento" class="control-label"></label>
+                    <input asp-for="DataDeNascimento" class="form-control" />
+                    <span asp-validation-for="DataDeNascimento" class="text-danger"></span>
+                </div>
+            </div>
+            <div id="divPessoaJuridica" style="display:none">
+                <div class="form-group">
+                    <label asp-for="NomeFantasia" class="control-label"></label>
+                    <input asp-for="NomeFantasia" class="form-control" />
+                    <span asp-validation-for="NomeFantasia" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="RazaoSocial" class="control-label"></label>
+                    <input asp-for="RazaoSocial" class="form-control" />
+                    <span asp-validation-for="RazaoSocial" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Cnpj" class="control-label"></label>
+                    <input asp-for="Cnpj" class="form-control" />
+                    <span asp-validation-for="Cnpj" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="InscricaoEstadual" class="control-label"></label>
+                    <input asp-for="InscricaoEstadual" class="form-control" />
+                    <span asp-validation-for="InscricaoEstadual" class="text-danger"></span>
+                </div>
+                <div class="form-group form-check">
+                    <label class="form-check-label">
+                        <input class="form-check-input" asp-for="OptanteDoSimples" /> @Html.DisplayNameFor(model => model.OptanteDoSimples)
+                    </label>
+                </div>
+            </div>
+            <div class="form-group">
+                <label asp-for="Observacoes" class="control-label"></label>
+                <input asp-for="Observacoes" class="form-control" />
+                <span asp-validation-for="Observacoes" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Salvar" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{
+    await Html.RenderPartialAsync("_ValidationScriptsPartial");
+}
+}
+
+<script>
+    function AtivarFisica()
+    {
+        $('#divPessoaFisica').show();
+        $('#divPessoaJuridica').hide();
+    }
+
+    function AtivarJuridica()
+    {   
+        $('#divPessoaFisica').hide();
+        $('#divPessoaJuridica').show();
+    }
+</script>

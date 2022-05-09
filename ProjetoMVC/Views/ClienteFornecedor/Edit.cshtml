@@ -1,0 +1,49 @@
+﻿@model ProjetoMVC.Models.ClienteFornecedorModel
+
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<h1>Edit</h1>
+
+<h4>ClienteFornecedorModel</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Edit">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="PessoaId" class="control-label"></label>
+                <select asp-for="PessoaId" class="form-control" asp-items="ViewBag.PessoaId"></select>
+                <span asp-validation-for="PessoaId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="PessoaJuridicaId" class="control-label"></label>
+                <select asp-for="PessoaJuridicaId" class="form-control" asp-items="ViewBag.PessoaJuridicaId"></select>
+                <span asp-validation-for="PessoaJuridicaId" class="text-danger"></span>
+            </div>
+            <div class="form-group form-check">
+                <label class="form-check-label">
+                    <input class="form-check-input" asp-for="Cliente" /> @Html.DisplayNameFor(model => model.Cliente)
+                </label>
+            </div>
+            <div class="form-group form-check">
+                <label class="form-check-label">
+                    <input class="form-check-input" asp-for="Fornecedor" /> @Html.DisplayNameFor(model => model.Fornecedor)
+                </label>
+            </div>
+            <input type="hidden" asp-for="Id" />
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

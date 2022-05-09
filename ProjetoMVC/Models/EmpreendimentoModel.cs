@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using ProjetoMVC.Helpers;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace ProjetoMVC.Models
@@ -6,7 +7,7 @@ namespace ProjetoMVC.Models
     [Table("Empreendimento")]
     public class EmpreendimentoModel : BaseModel
     {
-        [MaxLength(50, ErrorMessage = "")]
+        [MaxLength(50, ErrorMessage = MessageHelpers.MaxLenghtMessage)]
         public string Nome  { get; set; }
 
         [ForeignKey("Cliente")]
