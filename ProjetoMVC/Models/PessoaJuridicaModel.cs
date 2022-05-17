@@ -18,6 +18,5 @@ namespace ProjetoMVC.Models
         public string InscricaoEstadual { get; set; }
         public bool OptanteDoSimples { get; set; }
 
-     
     }
 }

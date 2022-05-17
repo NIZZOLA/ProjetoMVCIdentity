@@ -32,6 +32,5 @@ public class ProjetoMVCContext : IdentityDbContext<UsuarioModel>
     public DbSet<ContatoModel> Contatos { get; set; }
     public DbSet<ProjetoMVC.Models.PessoaModel> PessoaModel { get; set; }
     public DbSet<ProjetoMVC.Models.PessoaJuridicaModel> PessoaJuridicaModel { get; set; }
-    public DbSet<ProjetoMVC.Models.Contracts.Request.ClienteFornecedorRequestModel> ClienteFornecedorRequestModel { get; set; }
    
 }

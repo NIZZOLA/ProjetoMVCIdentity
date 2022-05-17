@@ -4,10 +4,10 @@
     ViewData["Title"] = "Index";
 }
 
-<h1>Index</h1>
+<h1>Endereços @if(ViewBag.ClienteNome != null) { @ViewBag.ClienteNome } </h1>
 
 <p>
-    <a asp-action="Create">Create New</a>
+    <a asp-action="Create" asp-route-id="@ViewBag.ClienteId">Create New</a>
 </p>
 <table class="table">
     <thead>
@@ -49,10 +49,10 @@
 @foreach (var item in Model) {
         <tr>
             <td>
-                @Html.DisplayFor(modelItem => item.ClienteFornecedor.Id)
+                @Html.DisplayFor(modelItem => item.ClienteFornecedor.Nome)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Empreendimento.Id)
+                @Html.DisplayFor(modelItem => item.Empreendimento.Nome)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Logradouro)
@@ -64,7 +64,7 @@
                 @Html.DisplayFor(modelItem => item.Bairro)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Cidade.Id)
+                @Html.DisplayFor(modelItem => item.Cidade.NomeCidade)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Cep)

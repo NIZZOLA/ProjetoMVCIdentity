@@ -24,7 +24,9 @@ namespace ProjetoMVC.Controllers
         // GET: ClienteFornecedor
         public async Task<IActionResult> Index()
         {
-            var projetoMVCContext = _context.ClientesFornecedores.Include(c => c.PessoaFisica).Include(c => c.PessoaJuridica);
+            var projetoMVCContext = _context.ClientesFornecedores
+                .Include(c => c.PessoaFisica)
+                .Include(c => c.PessoaJuridica);
             return View(await projetoMVCContext.ToListAsync());
         }
 
