@@ -20,5 +20,19 @@ namespace ProjetoMVC.Models
 
         public ICollection<ContatoModel> Contatos { get; set; }
         public ICollection<EnderecoModel> Enderecos { get; set; }
+
+
+        public string Nome
+        {
+            get
+            {
+                if (this.PessoaFisica != null)
+                    return this.PessoaFisica.Nome;
+                else if (this.PessoaJuridica != null)
+                    return this.PessoaJuridica.NomeFantasia;
+                else
+                    return "";
+            }
+        }
     }
 }

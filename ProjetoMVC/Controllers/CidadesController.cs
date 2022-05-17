@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using ProjetoMVC.Data;
 using ProjetoMVC.Models;
+using ProjetoMVC.Models.Enum;
 
 namespace ProjetoMVC.Controllers
 {
@@ -23,7 +24,8 @@ namespace ProjetoMVC.Controllers
         // GET: Cidades
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Cidades.ToListAsync());
+            var cidades = await _context.Cidades.ToListAsync();
+            return View(cidades.OrderBy(c => c.NomeCidade));
         }
 
         // GET: Cidades/Details/5
@@ -43,10 +45,18 @@ namespace ProjetoMVC.Controllers
 
             return View(cidadeModel);
         }
+        public SelectList DropDownEstados(EstadoEnum padrao)
+        {
+            var estados = from EstadoEnum e in Enum.GetValues(typeof(EstadoEnum))
+                          select new { ID = (int)e, Name = e.ToString() };
+
+            return new SelectList(estados, "ID", "Name", (int)padrao);
+        }
 
         // GET: Cidades/Create
         public IActionResult Create()
         {
+            ViewData["Estado"] = DropDownEstados(EstadoEnum.SP);
             return View();
         }
 
@@ -63,6 +73,8 @@ namespace ProjetoMVC.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
+            ViewData["Estado"] = DropDownEstados(EstadoEnum.SP);
+
             return View(cidadeModel);
         }
 
@@ -79,6 +91,8 @@ namespace ProjetoMVC.Controllers
             {
                 return NotFound();
             }
+            ViewData["Estado"] = DropDownEstados(cidadeModel.Estado);
+
             return View(cidadeModel);
         }
 
@@ -114,6 +128,8 @@ namespace ProjetoMVC.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
+            ViewData["Estado"] = DropDownEstados(cidadeModel.Estado);
+
             return View(cidadeModel);
         }
 

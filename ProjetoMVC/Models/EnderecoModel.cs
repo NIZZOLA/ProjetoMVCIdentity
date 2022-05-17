@@ -1,4 +1,5 @@
-﻿using ProjetoMVC.Models.Enum;
+﻿using ProjetoMVC.Helpers;
+using ProjetoMVC.Models.Enum;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
@@ -15,17 +16,17 @@ namespace ProjetoMVC.Models
         public Guid? EmpreendimentoId { get; set; }
         public EmpreendimentoModel? Empreendimento { get; set; }
 
-        [MaxLength(50, ErrorMessage = "")]
+        [MaxLength(50, ErrorMessage = MessageHelpers.MaxLenghtMessage)]
         public string Logradouro { get; set; }
         public int Numero { get; set; }
-        [MaxLength(50, ErrorMessage = "")]
+        [MaxLength(50, ErrorMessage = MessageHelpers.MaxLenghtMessage)]
         public string Bairro { get; set; }
 
         [ForeignKey("Cidade")]
         public Guid? CidadeId { get; set; }
-        public CidadeModel Cidade { get; set; }
+        public CidadeModel? Cidade { get; set; }
 
-        [MaxLength(10, ErrorMessage = "")]
+        [MaxLength(10, ErrorMessage = MessageHelpers.MaxLenghtMessage)]
         public string Cep { get; set; }
         public TipoEnderecoEnum Tipo { get; set; }
 

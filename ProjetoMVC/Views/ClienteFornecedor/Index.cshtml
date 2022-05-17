@@ -1,22 +1,18 @@
 ﻿@model IEnumerable<ProjetoMVC.Models.ClienteFornecedorModel>
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Cadastro de Clientes";
 }
 
-<h1>Index</h1>
+<h1>Cadastro de Clientes</h1>
 
 <p>
-    <a asp-action="Create">Create New</a>
+    <a asp-action="Create" title="Incluir"><i class="bi bi-file-earmark-plus"></i></a>
 </p>
 <table class="table">
-    <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.PessoaFisica)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.PessoaJuridica)
+                Cliente
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.Cliente)
@@ -45,18 +41,21 @@
                 
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.PessoaJuridica.Id)
-            </td>
-            <td>
                 @Html.DisplayFor(modelItem => item.Cliente)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Fornecedor)
             </td>
             <td>
-                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                <a asp-action="Edit" asp-route-id="@item.Id" title="Editar"><i class="bi bi-pencil-square"></i></a> |
+                <a asp-action="Details" asp-route-id="@item.Id" title="Consultar"><i class="bi bi-eye-fill"></i></a> |
+                <a asp-action="Delete" asp-route-id="@item.Id" title="Excluir"><i class="bi bi-trash-fill"></i></a> |
+
+                <a asp-action="Index" asp-controller="Empreendimento" asp-route-id="@item.Id" title="Empreendimentos"><i class="bi bi-building"></i></a> |
+                <a asp-action="Index" asp-controller="Conta" asp-route-id="@item.Id" title="Contas"><i class="bi bi-cash-coin"></i></a>  |
+
+                <a asp-action="Index" asp-controller="Endereco" asp-route-id="@item.Id" title="Endereços"><i class="bi bi-house-door"></i></a> |
+                <a asp-action="Index" asp-controller="Contato" asp-route-id="@item.Id" title="Contatos"><i class="bi bi-telephone"></i></a>
             </td>
         </tr>
 }

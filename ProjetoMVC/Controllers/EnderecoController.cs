@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using ProjetoMVC.Data;
 using ProjetoMVC.Models;
+using ProjetoMVC.Models.Enum;
 
 namespace ProjetoMVC.Controllers
 {
@@ -21,10 +22,31 @@ namespace ProjetoMVC.Controllers
         }
 
         // GET: Endereco
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(Guid? id)
         {
-            var projetoMVCContext = _context.Enderecos.Include(e => e.Cidade).Include(e => e.ClienteFornecedor).Include(e => e.Empreendimento);
-            return View(await projetoMVCContext.ToListAsync());
+            if (id.HasValue)
+            {
+                ViewBag.ClienteId = id.Value;
+
+                var cliente = _context.ClientesFornecedores.Where(x => x.Id == id.Value)
+                            .Include(x => x.PessoaJuridica)
+                            .Include(x => x.PessoaFisica)
+                            .FirstOrDefault();
+                ViewBag.ClienteNome = cliente.PessoaFisica != null ? cliente.PessoaFisica.Nome : cliente.PessoaJuridica.NomeFantasia;
+
+                var projetoMVCContext = _context.Enderecos.Where(a => a.ClienteFornecedorId == id.Value).Include(e => e.Cidade).Include(e => e.ClienteFornecedor).Include(e => e.Empreendimento);
+                return View(await projetoMVCContext.ToListAsync());
+            }
+            else
+            {
+                var projetoMVCContext = _context.Enderecos
+                                    .Include(e => e.Cidade)
+                                    .Include(e => e.ClienteFornecedor)
+                                    .Include(e => e.ClienteFornecedor.PessoaJuridica)
+                                    .Include(e => e.ClienteFornecedor.PessoaFisica)
+                                    .Include(e => e.Empreendimento);
+                return View(await projetoMVCContext.ToListAsync());
+            }
         }
 
         // GET: Endereco/Details/5
@@ -48,12 +70,43 @@ namespace ProjetoMVC.Controllers
             return View(enderecoModel);
         }
 
+        public void CreateViewBags(EnderecoModel ende)
+        {
+            var clientes = _context.ClientesFornecedores
+                .Include(c => c.PessoaFisica)
+                .Include(c => c.PessoaJuridica)
+                .ToList()
+                .OrderBy(c => c.Nome);
+
+            var tiposDeEndereco = from TipoEnderecoEnum e in Enum.GetValues(typeof(TipoEnderecoEnum))
+                                  select new { ID = (int)e, Name = e.ToString() };
+
+            if (ende == null)
+            {
+                ViewData["ClienteFornecedorId"] = new SelectList(clientes, "Id", "Nome");
+                ViewData["EmpreendimentoId"] = new SelectList(_context.Empreendimentos.OrderBy(a => a.Nome), "Id", "Nome");
+                ViewData["CidadeId"] = new SelectList(_context.Cidades, "Id", "NomeCidade");
+                ViewData["Tipo"] = new SelectList(tiposDeEndereco.OrderBy(a => a.Name), "ID", "Name", (int)TipoEnderecoEnum.PRINCIPAL);
+            }
+            else
+            {
+                ViewData["ClienteFornecedorId"] = new SelectList(clientes, "Id", "Nome", ende.ClienteFornecedorId);
+                
+                ViewData["CidadeId"] = new SelectList(_context.Cidades, "Id", "NomeCidade", ende.CidadeId);
+                
+                if (ende.EmpreendimentoId.HasValue)
+                    ViewData["EmpreendimentoId"] = new SelectList(_context.Empreendimentos.OrderBy(a => a.Nome), "Id", "Nome", ende.EmpreendimentoId.Value);
+                else
+                    ViewData["EmpreendimentoId"] = new SelectList(_context.Empreendimentos.OrderBy(a => a.Nome), "Id", "Nome");
+
+                ViewData["Tipo"] = new SelectList(tiposDeEndereco.OrderBy(a => a.Name), "ID", "Name", (int)TipoEnderecoEnum.PRINCIPAL);
+            }
+        }
+
         // GET: Endereco/Create
         public IActionResult Create()
         {
-            ViewData["CidadeId"] = new SelectList(_context.Cidades, "Id", "Id");
-            ViewData["ClienteFornecedorId"] = new SelectList(_context.ClientesFornecedores, "Id", "Id");
-            ViewData["EmpreendimentoId"] = new SelectList(_context.Empreendimentos, "Id", "Id");
+            CreateViewBags(null);
             return View();
         }
 
@@ -70,9 +123,7 @@ namespace ProjetoMVC.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["CidadeId"] = new SelectList(_context.Cidades, "Id", "Id", enderecoModel.CidadeId);
-            ViewData["ClienteFornecedorId"] = new SelectList(_context.ClientesFornecedores, "Id", "Id", enderecoModel.ClienteFornecedorId);
-            ViewData["EmpreendimentoId"] = new SelectList(_context.Empreendimentos, "Id", "Id", enderecoModel.EmpreendimentoId);
+            CreateViewBags(enderecoModel);
             return View(enderecoModel);
         }
 
